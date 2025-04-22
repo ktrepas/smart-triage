@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Triage Assistant</title>
+    <style>
+        body { font-family: Arial; padding: 2em; background: #f0f4f8; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; }
+        .symptoms { margin: 1em 0; }
+        .result { margin-top: 1em; font-size: 1.2em; }
+        button { padding: 10px 20px; border: none; background: #007bff; color: white; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🧠 Smart Triage Assistant</h1>
+    <form method="POST">
+        <div class="symptoms">
+            <label><input type="checkbox" name="symptoms" value="chest_pain"> Chest Pain</label><br>
+            <label><input type="checkbox" name="symptoms" value="breathing_difficulty"> Difficulty Breathing</label><br>
+            <label><input type="checkbox" name="symptoms" value="bleeding"> Heavy Bleeding</label><br>
+            <label><input type="checkbox" name="symptoms" value="unconscious"> Unconscious</label><br>
+            <label><input type="checkbox" name="symptoms" value="fever"> High Fever</label>
+        </div>
+        <button type="submit">Check Triage Result</button>
+    </form>
+
+    {% if result %}
+    <div class="result">
+        <strong>Result:</strong><br>
+        {{ result }}
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
