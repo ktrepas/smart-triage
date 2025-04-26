@@ -1,128 +1,124 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ labels["result"][lang] }}</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 2rem;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        h2 {
-            margin-bottom: 1.5rem;
-            text-align: center;
-            color: #333;
-        }
-        label {
-            display: block;
-            margin: 0.5rem 0 0.2rem;
-            font-weight: bold;
-        }
-        input[type=text], input[type=date] {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border-radius: 0.4rem;
-            border: 1px solid #ccc;
-        }
-        .symptom-list label {
-            font-weight: normal;
-            display: inline-block;
-            width: 48%;
-            margin-bottom: 0.5rem;
-        }
-        .result-box {
-            margin-top: 2rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            background-color: #eef;
-        }
-        .btn {
-            padding: 0.6rem 1.2rem;
-            border: none;
-            border-radius: 0.4rem;
-            background-color: #4f46e5;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-        .btn:hover {
-            background-color: #3730a3;
-        }
-        .badge {
-            display: inline-block;
-            padding: 0.4rem 0.8rem;
-            border-radius: 9999px;
-            font-weight: bold;
-        }
-        /* English severity colors */
-        .badge.high { background: #dc2626; color: white; }      /* red */
-        .badge.medium { background: #facc15; color: #333; }    /* yellow */
-        .badge.low { background: #22c55e; color: white; }      /* green */
-
-        /* Greek severity colors */
-        .badge.υψηλό { background: #dc2626; color: white; }    /* red */
-        .badge.μέτριο { background: #facc15; color: #333; }    /* yellow */
-        .badge.χαμηλό { background: #22c55e; color: white; }   /* green */
-
-        .print-btn {
-            float: right;
-            margin-top: 0.5rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>{{ labels["result"][lang] }}</title>
+<style>
+body {
+font-family: 'Segoe UI', sans-serif;
+background: #f5f5f5;
+margin: 0;
+padding: 2rem;
+}
+.container {
+max-width: 800px;
+margin: auto;
+background: white;
+padding: 2rem;
+border-radius: 1rem;
+box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+h2 {
+margin-bottom: 1.5rem;
+text-align: center;
+color: #333;
+}
+label {
+display: block;
+margin: 0.5rem 0 0.2rem;
+font-weight: bold;
+}
+input[type=text], input[type=date] {
+width: 100%;
+padding: 0.5rem;
+margin-bottom: 1rem;
+border-radius: 0.4rem;
+border: 1px solid #ccc;
+}
+.symptom-list label {
+font-weight: normal;
+display: inline-block;
+width: 48%;
+margin-bottom: 0.5rem;
+}
+.result-box {
+margin-top: 2rem;
+padding: 1rem;
+border-radius: 0.5rem;
+background-color: #eef;
+}
+.btn {
+padding: 0.6rem 1.2rem;
+border: none;
+border-radius: 0.4rem;
+background-color: #4f46e5;
+color: white;
+font-weight: bold;
+cursor: pointer;
+margin-top: 1rem;
+}
+.btn:hover {
+background-color: #3730a3;
+}
+.badge {
+display: inline-block;
+padding: 0.4rem 0.8rem;
+border-radius: 9999px;
+font-weight: bold;
+}
+/* English severity colors */
+.badge.high { background: #dc2626; color: white; } /* red */
+.badge.medium { background: #facc15; color: #333; } /* yellow */
+.badge.low { background: #22c55e; color: white; } /* green */
+/* Greek severity colors */
+.badge.υψηλό { background: #dc2626; color: white; } /* red */
+.badge.μέτριο { background: #facc15; color: #333; } /* yellow */
+.badge.χαμηλό { background: #22c55e; color: white; } /* green */
+.print-btn {
+float: right;
+margin-top: 0.5rem;
+}
+.department-info {
+margin-top: 1rem;
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h2>{{ labels["result"][lang] }}</h2>
-
-        <form method="post" action="/?lang={{ lang }}">
-            <!-- Date input -->
-            <label for="date">{{ labels["date"][lang] }}:</label>
-            <input type="date" id="date" name="date" value="{{ date_value }}" required>
-
-            <label>{{ labels["name"][lang] }}:</label>
-            <input type="text" name="name" value="{{ name }}" required>
-
-            <label>{{ labels["gender"][lang] }}:</label>
-            <label><input type="radio" name="gender" value="male" {% if gender == "male" %}checked{% endif %}> {{ labels["male"][lang] }}</label>
-            <label><input type="radio" name="gender" value="female" {% if gender == "female" %}checked{% endif %}> {{ labels["female"][lang] }}</label>
-
-            <label>{{ labels["insurance"][lang] }}:</label>
-            <input type="text" name="insurance" value="{{ insurance }}" required>
-
-            <label>{{ labels["symptoms"][lang] }}:</label>
-            <div class="symptom-list">
-                {% for key, value in symptoms.items() %}
-                    <label><input type="checkbox" name="symptoms" value="{{ key }}" {% if key in selected %}checked{% endif %}> {{ value[lang] }}</label>
-                {% endfor %}
-            </div>
-
-            <button class="btn" type="submit">{{ labels["submit"][lang] }}</button>
-            <a href="/?lang={{ 'el' if lang == 'en' else 'en' }}" class="btn" style="background-color:#aaa; margin-left:1rem;">
-                {{ labels["language"]['el' if lang == 'en' else 'en'] }}
-            </a>
-        </form>
-
-        {% if result %}
-        <div class="result-box">
-            <h3>{{ labels["result"][lang] }}:
-                <span class="badge {{ result|lower }}">{{ result }}</span>
-            </h3>
-            <p><strong>{{ labels["next_step"][lang] }}:</strong> {{ department }}</p>
-            <button onclick="window.print()" class="btn print-btn">🖨️ {{ 'Print' if lang == 'en' else 'Εκτύπωση' }}</button>
-        </div>
-        {% endif %}
-    </div>
+<div class="container">
+<h2>{{ labels["result"][lang] }}</h2>
+<form method="post" action="/?lang={{ lang }}">
+<!-- Date input -->
+<label for="date">{{ labels["date"][lang] }}:</label>
+<input type="date" id="date" name="date" value="{{ date_value }}" required>
+<label>{{ labels["name"][lang] }}:</label>
+<input type="text" name="name" value="{{ name }}" required>
+<label>{{ labels["gender"][lang] }}:</label>
+<label><input type="radio" name="gender" value="male" {% if gender == "male" %}checked{% endif %}> {{ labels["male"][lang] }}</label>
+<label><input type="radio" name="gender" value="female" {% if gender == "female" %}checked{% endif %}> {{ labels["female"][lang] }}</label>
+<label>{{ labels["insurance"][lang] }}:</label>
+<input type="text" name="insurance" value="{{ insurance }}" required>
+<label>{{ labels["symptoms"][lang] }}:</label>
+<div class="symptom-list">
+{% for key, value in symptoms.items() %}
+<label><input type="checkbox" name="symptoms" value="{{ key }}" {% if key in selected %}checked{% endif %}> {{ value[lang] }}</label>
+{% endfor %}
+</div>
+<button class="btn" type="submit">{{ labels["submit"][lang] }}</button>
+<a href="/?lang={{ 'el' if lang == 'en' else 'en' }}" class="btn" style="background-color:#aaa; margin-left:1rem;">
+{{ labels["language"]['el' if lang == 'en' else 'en'] }}
+</a>
+</form>
+{% if result %}
+<div class="result-box">
+<h3>{{ labels["result"][lang] }}:
+<span class="badge {{ result|lower }}">{{ result }}</span>
+</h3>
+<div class="department-info">
+<p><strong>{{ labels["next_step"][lang] }}:</strong> {{ department }}</p>
+</div>
+<button onclick="window.print()" class="btn print-btn">🖨️ {{ 'Print' if lang == 'en' else 'Εκτύπωση' }}</button>
+</div>
+{% endif %}
+</div>
 </body>
 </html>
